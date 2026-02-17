@@ -1,14 +1,16 @@
 <template>
   <div v-if="product">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <img :src="product.thumbnail" class="w-full h-80 object-cover rounded" />
-      <div>
-        <h1 class="text-2xl font-semibold">{{ product.title }}</h1>
-        <p class="text-gray-500 dark:text-gray-300">{{ product.brand }} • {{ product.category }}</p>
-        <div class="mt-4 text-xl font-bold">${{ product.price }}</div>
-        <p class="mt-4">{{ product.description }}</p>
-        <div class="mt-6">
-          <button @click="add" class="px-4 py-2 bg-brand-500 text-white rounded">Add to cart</button>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+      <div class="flex items-center justify-center">
+        <img :src="product.thumbnail" class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg shadow-md" />
+      </div>
+      <div class="flex flex-col justify-start">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight">{{ product.title }}</h1>
+        <p class="text-gray-500 dark:text-gray-300 text-sm sm:text-base mt-2">{{ product.brand }} • {{ product.category }}</p>
+        <div class="mt-4 text-2xl sm:text-3xl font-bold text-brand-500 py-3 border-y">${{ product.price }}</div>
+        <p class="mt-4 text-gray-700 dark:text-gray-200 text-sm sm:text-base leading-relaxed">{{ product.description }}</p>
+        <div class="mt-6 sm:mt-8 flex gap-3">
+          <button @click="add" class="flex-1 px-4 sm:px-6 py-2 sm:py-3 bg-brand-500 text-white rounded-lg font-medium hover:bg-blue-700 transition text-sm sm:text-base">Add to cart</button>
         </div>
       </div>
     </div>

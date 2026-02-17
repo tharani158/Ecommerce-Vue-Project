@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="mb-4 flex items-center justify-between">
+  <div class="w-full">
+    <div class="mb-6 sm:mb-8">
       <FilterBar :categories="categories" @filter="onFilter" @sort="onSort" />
     </div>
 

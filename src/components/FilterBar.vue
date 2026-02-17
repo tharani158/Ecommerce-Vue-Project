@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <select v-model="selected" @change="emitFilter" class="border rounded px-2 py-1 dark:bg-gray-700">
+  <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+    <select v-model="selected" @change="emitFilter" class="border rounded px-3 py-2 sm:px-2 sm:py-1 dark:bg-gray-700 text-sm sm:text-base flex-1 sm:flex-none">
       <option value="">All Categories</option>
       <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
     </select>
-    <select v-model="sort" @change="emitSort" class="border rounded px-2 py-1 dark:bg-gray-700">
+    <select v-model="sort" @change="emitSort" class="border rounded px-3 py-2 sm:px-2 sm:py-1 dark:bg-gray-700 text-sm sm:text-base flex-1 sm:flex-none">
       <option value="">Sort</option>
       <option value="price_asc">Price: Low - High</option>
       <option value="price_desc">Price: High - Low</option>

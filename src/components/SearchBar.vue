@@ -1,6 +1,10 @@
 <template>
   <div>
-    <input v-model="q" @input="emitSearch" placeholder="Search products..." class="border rounded px-3 py-1 w-64 dark:bg-gray-700 dark:border-gray-600" />
+    <input 
+      v-model="q" 
+      @input="emitSearch" 
+      placeholder="Search products..." 
+      class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition" />
   </div>
 </template>
 

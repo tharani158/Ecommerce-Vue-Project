@@ -1,7 +1,9 @@
 <template>
-  <button @click="toggle" class="p-2 rounded bg-gray-100 dark:bg-gray-700">
-    <span v-if="isDark">🌙</span>
-    <span v-else>☀️</span>
+  <button 
+    @click="toggle" 
+    class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition inline-flex items-center justify-center w-10 h-10">
+    <span v-if="isDark" class="text-xl">🌙</span>
+    <span v-else class="text-xl">☀️</span>
   </button>
 </template>
 
