@@ -19,24 +19,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProducts } from '../composables/useProducts'
 import { useCartStore } from '../stores/cartStore'
 
 const route = useRoute()
-const id = Number(route.params.id)
 const { fetchProductById } = useProducts()
 const product = ref()
 const cart = useCartStore()
 
-onMounted(async () => {
-  if (!Number.isNaN(id)) {
-    // fetch by id
-    const p = await fetchProductById(id)
-    product.value = p
+async function loadProduct() {
+  const id = Number(route.params.id)
+  if (Number.isNaN(id)) {
+    product.value = undefined
+    return
   }
-})
+  product.value = undefined
+  product.value = await fetchProductById(id)
+}
+
+onMounted(loadProduct)
+watch(() => route.params.id, loadProduct)
 
 function add() {
   if (product.value) cart.addToCart(product.value)

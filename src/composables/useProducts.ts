@@ -5,8 +5,10 @@ import type { Product, ProductsResponse } from '../types/product'
 const BASE = 'https://dummyjson.com'
 
 export function useProducts() {
+  type CategoryShape = { slug: string; name: string }
+
   const products = ref<Product[]>([])
-  const categories = ref<string[]>([])
+  const categories = ref<CategoryShape[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
 
@@ -28,10 +30,28 @@ export function useProducts() {
     return res.data
   }
 
+  const categoryMap: Record<string, string> = {
+    beauty: 'Beauty',
+    furniture: 'Furniture',
+    groceries: 'Groceries'
+  }
+
+  const allowedSlugs = Object.keys(categoryMap)
+
   async function fetchCategories() {
     try {
-      const res = await axios.get<string[]>(`${BASE}/products/categories`)
-      categories.value = res.data
+      const res = await axios.get<string[] | Array<{slug:string,name:string}>>(`${BASE}/products/categories`)
+      const rawCategories = res.data
+
+      categories.value = rawCategories
+        .map(item => {
+          if (typeof item === 'string') {
+            return { slug: item, name: categoryMap[item] || item }
+          }
+          const slug = item.slug || item.name.toLowerCase().replace(/\s+/g, '-')
+          return { slug, name: categoryMap[slug] || item.name || slug }
+        })
+        .filter(cat => allowedSlugs.includes(cat.slug))
     } catch (err) {
       // ignore for now
     }

@@ -14,7 +14,6 @@
 
 <script lang="ts" setup>
 import type { Product } from '../types/product'
-import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{ product: Product }>()

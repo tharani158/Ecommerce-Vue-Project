@@ -2,7 +2,7 @@
   <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
     <select v-model="selected" @change="emitFilter" class="border rounded px-3 py-2 sm:px-2 sm:py-1 dark:bg-gray-700 text-sm sm:text-base flex-1 sm:flex-none">
       <option value="">All Categories</option>
-      <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+      <option v-for="c in categories" :key="c.slug" :value="c.slug">{{ c.name }}</option>
     </select>
     <select v-model="sort" @change="emitSort" class="border rounded px-3 py-2 sm:px-2 sm:py-1 dark:bg-gray-700 text-sm sm:text-base flex-1 sm:flex-none">
       <option value="">Sort</option>
@@ -15,7 +15,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const props = defineProps<{ categories: string[] }>()
+type CategoryShape = { slug: string; name: string }
+const props = defineProps<{ categories: CategoryShape[] }>()
 const emit = defineEmits<{
   (e: 'filter', category: string): void
   (e: 'sort', mode: string): void
