@@ -2,19 +2,16 @@
   <header class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 sticky top-0 z-40">
     <div class="container mx-auto px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
 
-      <!-- Logo -->
       <router-link 
         to="/" 
         class="text-xl sm:text-2xl font-semibold text-brand-500 flex-shrink-0">
         Store
       </router-link>
 
-      <!-- Desktop Search -->
       <div class="hidden md:block w-1/3">
         <SearchBar @search="onSearch" />
       </div>
 
-      <!-- Desktop Right Section -->
       <div class="hidden md:flex items-center space-x-3 lg:space-x-4">
         <DarkModeToggle />
 
@@ -32,7 +29,6 @@
           Logout
         </button>
 
-        <!-- Cart -->
         <button @click="toggleCart" class="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -47,7 +43,6 @@
         </button>
       </div>
 
-      <!-- Mobile Menu Button -->
       <button 
         class="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
         <svg @click="isOpen = !isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,12 +51,10 @@
       </button>
     </div>
 
-    <!-- Mobile Search -->
     <div class="md:hidden px-3 sm:px-4 pb-3">
       <SearchBar @search="onSearch" />
     </div>
 
-    <!-- Mobile Menu -->
     <div v-if="isOpen" class="md:hidden px-3 sm:px-4 pb-4 space-y-2 border-t dark:border-gray-700">
 
       <DarkModeToggle />
