@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, onActivated, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProducts } from '../composables/useProducts'
 import { useCartStore } from '../stores/cartStore'
@@ -40,6 +40,7 @@ async function loadProduct() {
 }
 
 onMounted(loadProduct)
+onActivated(loadProduct)
 watch(() => route.params.id, loadProduct)
 
 function add() {
