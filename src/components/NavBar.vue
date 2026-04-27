@@ -2,7 +2,7 @@
   <header class="sticky top-0 z-40 border-b bg-white dark:border-gray-700 dark:bg-gray-800">
     <div class="container mx-auto flex items-center justify-between px-3 py-3 sm:px-4">
       <router-link to="/" class="text-xl font-semibold text-brand-500 sm:text-2xl">
-        Store
+        ROVER DIGITAL STORE
       </router-link>
 
       <div class="hidden items-center space-x-3 md:flex">
