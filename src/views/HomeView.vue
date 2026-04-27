@@ -1,53 +1,54 @@
 <template>
   <div class="w-full">
     <div class="mb-6 sm:mb-8">
-      <FilterBar :categories="categories" @filter="onFilter" @sort="onSort" />
+      <FilterBar
+        :categories="categories"
+        :search-term="searchTerm"
+        :selected-category="selectedCategory"
+        :sort-mode="sortMode"
+        @update:search-term="searchTerm = $event"
+        @update:selected-category="selectedCategory = $event"
+        @update:sort-mode="sortMode = $event"
+      />
     </div>
 
-    <ProductGrid :products="displayed" />
+    <p v-if="loading" class="text-sm text-gray-500">Loading products...</p>
+    <p v-else-if="error" class="text-sm text-red-500">{{ error }}</p>
+    <ProductGrid v-else :products="displayed" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
-import { useProducts } from '../composables/useProducts'
-import ProductGrid from '../components/ProductGrid.vue'
+import { computed, onMounted, ref } from 'vue'
 import FilterBar from '../components/FilterBar.vue'
+import ProductGrid from '../components/ProductGrid.vue'
+import { useProducts } from '../composables/useProducts'
 
-const { products, fetchProducts, categories, fetchCategories } = useProducts()
-const search = ref('')
-const category = ref('')
-const sortMode = ref('')
+type SortMode = '' | 'price_asc' | 'price_desc'
+
+const { products, fetchProducts, categories, fetchCategories, loading, error } = useProducts()
+const searchTerm = ref('')
+const selectedCategory = ref('')
+const sortMode = ref<SortMode>('')
 
 onMounted(async () => {
   await fetchProducts()
   await fetchCategories()
-  window.addEventListener('global-search', (e: Event) => {
-    const detail = (e as CustomEvent<string>).detail
-    search.value = detail
-  })
 })
-
-function onFilter(cat: string) {
-  category.value = cat
-}
-
-function onSort(mode: string) {
-  sortMode.value = mode
-}
 
 const displayed = computed(() => {
   let list = products.value.slice()
-  if (search.value) {
-    const s = search.value.toLowerCase()
-    list = list.filter(p => p.title.toLowerCase().includes(s))
+  if (searchTerm.value) {
+    const loweredSearchTerm = searchTerm.value.toLowerCase()
+    list = list.filter(
+      (product) =>
+        product.title.toLowerCase().includes(loweredSearchTerm) ||
+        product.description.toLowerCase().includes(loweredSearchTerm)
+    )
   }
-  if (category.value) list = list.filter(p => p.category === category.value)
-  if (sortMode.value === 'price_asc') list.sort((a, b) => a.price - b.price)
-  if (sortMode.value === 'price_desc') list.sort((a, b) => b.price - a.price)
+  if (selectedCategory.value) list = list.filter((product) => product.category === selectedCategory.value)
+  if (sortMode.value === 'price_asc') list.sort((first, second) => first.price - second.price)
+  if (sortMode.value === 'price_desc') list.sort((first, second) => second.price - first.price)
   return list
 })
-
 </script>
-
-<style scoped></style>
