@@ -2,10 +2,12 @@
   <div class="max-w-md mx-auto bg-white dark:bg-gray-800 p-6 rounded shadow">
     <h2 class="text-xl font-semibold mb-4">Login</h2>
     <form @submit.prevent="doLogin" class="space-y-3">
-      <input v-model="username" placeholder="username" class="w-full border px-3 py-2 rounded dark:bg-gray-700" />
-      <input v-model="password" placeholder="password" type="password" class="w-full border px-3 py-2 rounded dark:bg-gray-700" />
+      <label class="sr-only" for="username">Username</label>
+      <input id="username" v-model="username" placeholder="username" autocomplete="username" class="w-full border px-3 py-2 rounded dark:bg-gray-700" />
+      <label class="sr-only" for="password">Password</label>
+      <input id="password" v-model="password" placeholder="password" autocomplete="current-password" type="password" class="w-full border px-3 py-2 rounded dark:bg-gray-700" />
       <div class="flex items-center justify-between">
-        <button class="px-4 py-2 bg-brand-500 text-white rounded">Sign in</button>
+        <button type="submit" class="px-4 py-2 bg-brand-500 text-white rounded">Sign in</button>
         <div class="text-sm text-gray-500">Try: kminchelle / 0lelplR</div>
       </div>
     </form>

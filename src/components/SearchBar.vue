@@ -1,24 +1,29 @@
 <template>
   <div>
-    <input 
-      v-model="q" 
-      @input="emitSearch" 
-      placeholder="Search products..." 
-      class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition" />
+    <label for="product-search" class="sr-only">Search products</label>
+    <input
+      id="product-search"
+      :value="modelValue"
+      type="search"
+      placeholder="Search products..."
+      class="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      @input="onInput"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-const emit = defineEmits<{
-  (e: 'search', value: string): void
+const props = defineProps<{
+  modelValue: string
 }>()
 
-const q = ref('')
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: string): void
+}>()
 
-function emitSearch() {
-  emit('search', q.value)
+function onInput(event: Event) {
+  const input = event.target as HTMLInputElement | null
+  emit('update:modelValue', input?.value ?? props.modelValue)
 }
 </script>
 

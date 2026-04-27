@@ -1,7 +1,10 @@
 <template>
-  <button 
-    @click="toggle" 
-    class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition inline-flex items-center justify-center w-10 h-10">
+  <button
+    type="button"
+    :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+    @click="toggle"
+    class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 p-2 transition hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
+  >
     <span v-if="isDark" class="text-xl">🌙</span>
     <span v-else class="text-xl">☀️</span>
   </button>
@@ -29,6 +32,8 @@ onMounted(() => {
     const raw = localStorage.getItem('theme_dark')
     if (raw) {
       isDark.value = JSON.parse(raw) as boolean
+    } else {
+      isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
     }
   } catch {}
   apply(isDark.value)

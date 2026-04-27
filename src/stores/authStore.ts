@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
-import type { User } from '../types/product'
+import type { LoginRequest, User } from '../types/product'
 
 const AUTH_KEY = 'ecom_auth_v1'
 
@@ -28,15 +28,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(username: string, password: string) {
-    // DummyJSON login: POST /auth/login
-    const res = await axios.post('https://dummyjson.com/auth/login', {
+    const payload: LoginRequest = {
       username,
       password
-    })
-    const data = res.data as { token?: string; id?: number; username?: string; firstName?: string; lastName?: string }
+    }
+    const res = await axios.post<User>('https://dummyjson.com/auth/login', payload)
+    const data = res.data
     user.value = {
       id: data.id,
-      username: data.username ?? username,
+      username: data.username,
       firstName: data.firstName,
       lastName: data.lastName,
       token: data.token
