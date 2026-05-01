@@ -90,9 +90,8 @@
 </template>
 
 
-<script lang="ts" setup>
-import { computed } from 'vue'
-import { ref } from 'vue'
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { useCartStore } from '../stores/cartStore'
 import { useAuthStore } from '../stores/authStore'
 import DarkModeToggle from './DarkModeToggle.vue'
